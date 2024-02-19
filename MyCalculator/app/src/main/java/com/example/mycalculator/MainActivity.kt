@@ -79,6 +79,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         reOperationButton.setOnClickListener {
+            if ((mainEditPanel.text.toString() == "-")){
+                mainEditPanel.error = "Нужно ввести число или цифру!"
+                return@setOnClickListener
+            }
             var number = mainEditPanel.text.toString()
             if(number != ""){
                 number = validateNumber(number)
@@ -109,8 +113,21 @@ class MainActivity : AppCompatActivity() {
     }
     // Cлушатель нажатия на кнопки операций
     fun clickButtonOperation(view: View) {
-        if((view is Button) && (mainEditPanel.text.toString() == "") && (viewNumber.text.toString() != "") && (viewOperation.text != "")){
+        if((view is Button) && (mainEditPanel.text.toString() == "") && (viewNumber.text.toString() != "") && (viewOperation.text == view.text.toString())){
             showError("Введите второе число!")
+            return Unit
+        }
+        if((view is Button) && (mainEditPanel.text.toString() == "-")){
+            showError("Нужно ввести число или цифру!")
+            return Unit
+        }
+//       if((view is Button) && (mainEditPanel.text.toString()[mainEditPanel.text.toString().length-1] == '.')){
+//           showError("Число не может заканчиваться не точку!")
+//           return Unit
+//        }
+        if((view is Button) && (mainEditPanel.text.toString() == "") && (viewNumber.text.toString() != "") && (viewOperation.text != view.text.toString())){
+            operation = view.text.toString()
+            viewOperation.text = operation
             return Unit
         }
         if((view is Button) && (mainEditPanel.text.toString() != "") && (viewNumber.text.toString() != "") && (viewOperation.text == "")){
@@ -127,12 +144,20 @@ class MainActivity : AppCompatActivity() {
     }
     // Слушатель нажатия на кнопку =
     fun btnResult(view: View) {
+        if((view is Button) && (mainEditPanel.text.toString() == "") && (viewNumber.text.toString() == "") && (viewOperation.text == "")){
+            showError("Мне что вычислять вообще?")
+            return Unit
+        }
         if((view is Button) && (mainEditPanel.text.toString() == "") && (viewNumber.text.toString() != "") && (viewOperation.text == "")){
             showError("Введите операцию и второе значение!")
             return Unit
         }
         if((view is Button) && (mainEditPanel.text.toString() == "") && (viewNumber.text.toString() != "") && (viewOperation.text != "")){
             showError("Введите второе число!")
+            return Unit
+        }
+        if((view is Button) && (mainEditPanel.text.toString() == "-")){
+            showError("Нужно ввести число или цифру!")
             return Unit
         }
         if((view is Button) && (number1 != "") && (operation != "")){
@@ -152,10 +177,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun validateNumber(textNumber:String):String{
+        if((textNumber[0] == '.') && (textNumber[textNumber.length-1] == '.'))
+            return "0".plus(textNumber).plus("0")
         if(textNumber[0] == '.')
             return "0".plus(textNumber)
         if(textNumber[textNumber.length-1] == '.')
-            return textNumber.plus('0')
+            return textNumber.plus("0")
         return textNumber
     }
 

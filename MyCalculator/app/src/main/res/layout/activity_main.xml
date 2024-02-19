@@ -436,7 +436,7 @@
         android:inputType="numberDecimal|numberSigned"
         android:textColor="@color/white"
         android:textColorHint="@color/black"
-        android:hint="0"
+        android:hint=""
         android:textSize="60sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
