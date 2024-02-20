@@ -171,8 +171,9 @@ class MainActivity : AppCompatActivity() {
         }
         val number = validateNumber(mainEditPanel.text.toString())
         if((view is Button) && (number != "") && (operation == "")){
-            viewNumber.text = number
-            mainEditPanel.text.clear()
+            showError("Выберите операцию и после второе число")
+//            viewNumber.text = number
+//            mainEditPanel.text.clear()
         }
     }
 
