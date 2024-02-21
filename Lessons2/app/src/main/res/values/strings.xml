@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Lessons2</string>
+    <string name="question1">Выполниться ли блок finally если поместить в блок try/catch оператор return?</string>
+    <string name="question2">Java поддерживает множественное наследоание?</string>
+    <string name="question3">Является ли класс StringBuilder синхронизированным в Java? </string>
+    <string name="question4">Заменит ли новый поступающий ключ в HashMap, если такой там уже есть?</string>
+    <string name="question5">При разростании HashMap до длинны спика 64 в бакете она преобразуется в дерево?</string>
+    <string name="true_text">Верно</string>
+    <string name="false_text">Не верно</string>
+    <string name="cheater_text">Списывать не хорошо!</string>
+</resources>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CheatActivity">
+
+    <TextView
+        android:id="@+id/textViewAnswer"
+        android:layout_width="61dp"
+        android:layout_height="16dp"
+        android:layout_marginTop="60dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="@+id/textViewSubmit"
+        app:layout_constraintStart_toStartOf="@+id/textViewSubmit"
+        app:layout_constraintTop_toTopOf="@+id/textViewSubmit" />
+
+    <TextView
+        android:id="@+id/textViewSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:text="Подглядывать не хорошо"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnShow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:text="Показать ответ"
+        app:layout_constraintEnd_toEndOf="@+id/textViewAnswer"
+        app:layout_constraintStart_toStartOf="@+id/textViewAnswer"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAnswer" />
+</androidx.constraintlayout.widget.ConstraintLayout>
