@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">MyStudentApp</string>
+    <string name="chanchText">Изменить</string>
+    <string name="studentInfoName">Информация о студенте</string>
+    <string name="saveText">Сохранить</string>
+    <string name="backText">Отмена</string>
+
+    <string name="defaulFirstName">Сидоренко</string>
+    <string name="defaulMiddleName">Максим</string>
+    <string name="defaulLastName">Витальевич</string>
+    <string name="defaulBirthday">26.04.2003</string>
+    <string name="defaulPhoneNumber">+7(999)633-98-77</string>
+    <string name="defaulCourse">3</string>
+    <string name="defaulGroup">34</string>
+</resources>
