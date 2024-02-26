@@ -178,6 +178,10 @@ class ChangeActivity : AppCompatActivity() {
         val month = parts[1].toInt()
         val year = parts[2].toInt()
 
+        if(year !in 1900..2024){
+            return false
+        }
+
         if (month !in 1..12) {
             return false
         }
