@@ -1,6 +1,7 @@
 package com.example.lessons3.fragments
 
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,9 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.lessons3.ActivityInterface
 import com.example.lessons3.MainActivity
 import com.example.lessons3.R
 import com.example.lessons3.data.University
@@ -71,16 +75,39 @@ class UniversityListFragment : Fragment(), MainActivity.Edit {
             holder.bind(viewModel.universityList.value!!.items[position])
         }
 
+
+        private var lastView : View? =null
+        private fun updateCurrentView(view : View){
+            lastView?.findViewById<ConstraintLayout>(R.id.clElementUniversity)?.setBackgroundColor(
+                ContextCompat.getColor(requireContext(), R.color.white)
+            )
+            view.findViewById<ConstraintLayout>(R.id.clElementUniversity).setBackgroundColor(
+                ContextCompat.getColor(requireContext(), R.color.mu_blue)
+            )
+            lastView=view
+        }
+
+
         private inner class ItemHolder(view: View)
             : RecyclerView.ViewHolder(view) {
                 private lateinit var university: University
 
                 fun bind(university: University){
                     this.university=university
+                    if(university==viewModel.university)
+                        updateCurrentView(itemView)
                     val tv = itemView.findViewById<TextView>(R.id.tvUniversity)
                     tv.text = university.name
                     val tvc = itemView.findViewById<TextView>(R.id.tvCity)
                     tvc.text = university.city
+                    val cl=View.OnClickListener{
+                        viewModel.setCurrentUniversity(university)
+                        updateCurrentView(itemView)
+                    }
+                    view?.findViewById<ConstraintLayout>(R.id.clElementUniversity)?.setOnClickListener(cl)
+                    tv.setOnClickListener(cl)
+                    tvc.setOnClickListener(cl)
+
                 }
             }
     }
@@ -150,5 +177,10 @@ class UniversityListFragment : Fragment(), MainActivity.Edit {
             .setCancelable(true)
             .create()
             .show()
+    }
+
+    override fun onAttach(context: Context) {
+        (requireContext() as ActivityInterface).updateTitle("Список университетов")
+        super.onAttach(context)
     }
 }

@@ -1,8 +1,19 @@
 package com.example.lessons3.repository
 
+import android.util.Log
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
+import androidx.preference.PreferenceManager
+import com.example.lessons3.Application34
+import com.example.lessons3.R
+import com.example.lessons3.data.Faculty
+import com.example.lessons3.data.FacultyList
 import com.example.lessons3.data.University
 import com.example.lessons3.data.UniversityList
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+
+const val TAG = "com.example.lessons.log.tag.DataRepository"
 
 class DataRepository private constructor(){
 
@@ -63,5 +74,101 @@ class DataRepository private constructor(){
             universityList.postValue(listTmp)
         }
         setCurrentUniversity(0)
+    }
+
+    fun saveData(){
+        val context = Application34.context
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        sharedPreferences.edit().apply{
+            val gson = Gson()
+            val lst = universityList.value?.items ?: listOf<University>()
+            val jsonString = gson.toJson(lst)
+            Log.d(TAG, "Сохранение $jsonString")
+            putString(context.getString(R.string.preference_key_university_list), jsonString)
+
+            putString(context.getString(R.string.preference_key_faculty_list), gson.toJson(facultyList.value?:listOf<Faculty>()))
+
+            apply()
+        }
+    }
+
+    fun loadData(){
+        val context = Application34.context
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        sharedPreferences.apply{
+            var jsonString = getString(context.getString(R.string.preference_key_university_list), null)
+            if (jsonString != null) {
+                Log.d(TAG, "Чтение $jsonString")
+                val listType = object : TypeToken<List<University>>() {}.type
+                val tempList = Gson().fromJson<List<University>>(jsonString, listType)
+                val temp = UniversityList()
+                temp.items = tempList.toMutableList()
+                Log.d(TAG, "Загрузка ${temp.toString()}")
+                universityList.value=temp
+                setCurrentUniversity(0)
+            }
+
+
+            jsonString = getString(context.getString(R.string.preference_key_faculty_list), null)
+            if (jsonString != null) {
+                Log.d(TAG, "Чтение $jsonString")
+                val listType = object : TypeToken<List<Faculty>>() {}.type
+                val tempList = Gson().fromJson<List<Faculty>>(jsonString, listType)
+                val temp = FacultyList()
+                temp.items = tempList.toMutableList()
+                Log.d(TAG, "Загрузка ${temp.toString()}")
+                facultyList.value=temp
+                setCurrentFaculty(0)
+            }
+        }
+    }
+
+
+
+    var facultyList: MutableLiveData<FacultyList?> = MutableLiveData()
+    var faculty: MutableLiveData<Faculty> = MutableLiveData()
+
+    fun newFaculty(faculty: Faculty){
+        val listTmp = (facultyList.value ?: FacultyList()).apply {
+            items.add(faculty)
+        }
+
+        // Добавляем так чтобы сообщить о том что добавили
+        facultyList.postValue(listTmp)
+        setCurrentFaculty(faculty)
+    }
+
+    fun setCurrentFaculty(_faculty : Faculty) {
+        faculty.postValue(_faculty)
+    }
+
+    fun setCurrentFaculty(position : Int){
+        if(faculty.value == null || position<0 || (facultyList.value?.items?.size!!<=position))
+            return
+        setCurrentFaculty(facultyList.value?.items!![position])
+    }
+
+    fun getFacultyPosition (faculty: Faculty): Int = facultyList.value?.items?.indexOfFirst {
+        it.id == faculty.id
+    }?:-1
+
+    fun getFacultyPosition()=getFacultyPosition(faculty.value?: Faculty())
+
+    fun updateFaculty(faculty: Faculty){
+        val position = getFacultyPosition(faculty)
+        if(position < 0) newFaculty(faculty)
+        else {
+            val listTmp = facultyList.value!!
+            listTmp.items[position]=faculty
+            facultyList.postValue(listTmp)
+        }
+    }
+
+    fun deleteFaculty(faculty: Faculty) {
+        val listTmp = facultyList.value!!
+        if(listTmp.items.remove(faculty)){
+            facultyList.postValue(listTmp)
+        }
+        setCurrentFaculty(0)
     }
 }
