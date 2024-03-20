@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.fragment.app.Fragment
+import com.example.lessons3.data.University
+import com.example.lessons3.fragments.FacultyListFragment
 import com.example.lessons3.fragments.UniversityListFragment
 import com.example.lessons3.repository.DataRepository
 
@@ -13,6 +16,11 @@ class MainActivity : AppCompatActivity(), ActivityInterface {
         fun append()
         fun update()
         fun delete()
+    }
+
+    companion object{
+        const val universityID = 0
+        const val facultyID = 1
     }
 
     private var _miNewUniversity: MenuItem? =null
@@ -71,6 +79,20 @@ class MainActivity : AppCompatActivity(), ActivityInterface {
 
     override fun updateTitle(newTitle : String){
       title = newTitle
+    }
+
+    override fun setFragment(fragmentId: Int) {
+        when (fragmentId){
+            universityID -> {setFragment(UniversityListFragment.getInstance())}
+            facultyID -> {setFragment(FacultyListFragment.getInstance())}
+        }
+    }
+
+    private fun setFragment(fragment: Fragment){
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fcvMain, fragment)
+            .commit()
     }
 
 

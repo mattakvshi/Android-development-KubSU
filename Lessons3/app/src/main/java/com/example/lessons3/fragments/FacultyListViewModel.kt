@@ -17,6 +17,9 @@ class FacultyListViewModel : ViewModel() {
     val faculty
         get()=_faculty
 
+    val university
+        get()=DataRepository.getInstatnce().university.value
+
     private val facultyListObserver = Observer<FacultyList?>{
             list ->
         facultyList.postValue(list)
@@ -34,13 +37,14 @@ class FacultyListViewModel : ViewModel() {
             DataRepository.getInstatnce().deleteFaculty(faculty!!)
     }
 
-    fun appendFaculty (facultyName : String, facultyCity: String){
+    fun appendFaculty (facultyName : String){
         val faculty = Faculty()
         faculty.name=facultyName
+        faculty.universityID=DataRepository.getInstatnce().university.value?.id
         DataRepository.getInstatnce().newFaculty(faculty)
     }
 
-    fun updateFaculty(facultyName: String, facultyCity: String){
+    fun updateFaculty(facultyName: String){
         if (_faculty!=null) {
             _faculty!!.name=facultyName
             DataRepository.getInstatnce().updateFaculty(_faculty!!)

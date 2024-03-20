@@ -107,6 +107,10 @@ class UniversityListFragment : Fragment(), MainActivity.Edit {
                     view?.findViewById<ConstraintLayout>(R.id.clElementUniversity)?.setOnClickListener(cl)
                     tv.setOnClickListener(cl)
                     tvc.setOnClickListener(cl)
+//                    view?.findViewById<ConstraintLayout>(R.id.clElementUniversity)?.setOnLongClickListener{
+//                        (requireContext() as ActivityInterface).setFragment(MainActivity.facultyID)
+//                        true
+//                    }
 
                 }
             }
