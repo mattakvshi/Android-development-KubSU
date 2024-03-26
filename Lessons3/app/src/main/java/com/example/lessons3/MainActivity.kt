@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import com.example.lessons3.data.University
 import com.example.lessons3.fragments.FacultyListFragment
@@ -30,10 +31,31 @@ class MainActivity : AppCompatActivity(), ActivityInterface {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.fcvMain, UniversityListFragment.getInstance())
-            .commit()
+        onBackPressedDispatcher.addCallback(this){
+            if (supportFragmentManager.backStackEntryCount > 0) {
+                supportFragmentManager.popBackStack()
+                when(currentFragmentID){
+                    universityID -> {
+                        finish()
+                    }
+                    facultyID ->{
+                        currentFragmentID= universityID
+                        updateTitle("Список университетов")
+                    }
+                    else->{}
+                }
+                updateMenuView()
+            }
+            else{
+                finish()
+            }
+        }
+        setFragment(universityID)
+
+//        supportFragmentManager
+//            .beginTransaction()
+//            .replace(R.id.fcvMain, UniversityListFragment.getInstance())
+//            .commit()
 
     }
 
@@ -81,17 +103,28 @@ class MainActivity : AppCompatActivity(), ActivityInterface {
       title = newTitle
     }
 
+    private var currentFragmentID = -1
+
     override fun setFragment(fragmentId: Int) {
+        currentFragmentID = fragmentId
         when (fragmentId){
             universityID -> {setFragment(UniversityListFragment.getInstance())}
             facultyID -> {setFragment(FacultyListFragment.getInstance())}
         }
+        updateMenuView()
+    }
+
+    private fun updateMenuView(){
+        _miUpdateUniversity?.isVisible=currentFragmentID== universityID
+        _miDeleteUniversity?.isVisible=currentFragmentID== universityID
+        _miNewUniversity?.isVisible=currentFragmentID== universityID
     }
 
     private fun setFragment(fragment: Fragment){
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.fcvMain, fragment)
+            .addToBackStack(null)
             .commit()
     }
 
