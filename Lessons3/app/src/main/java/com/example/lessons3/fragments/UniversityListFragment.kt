@@ -107,11 +107,15 @@ class UniversityListFragment : Fragment(), MainActivity.Edit {
                     view?.findViewById<ConstraintLayout>(R.id.clElementUniversity)?.setOnClickListener(cl)
                     tv.setOnClickListener(cl)
                     tvc.setOnClickListener(cl)
-//                    view?.findViewById<ConstraintLayout>(R.id.clElementUniversity)?.setOnLongClickListener{
-//                        (requireContext() as ActivityInterface).setFragment(MainActivity.facultyID)
-//                        true
-//                    }
-
+                    val lcl = View.OnLongClickListener {
+//                        viewModel.setCurrentUniversity(university)
+//                        updateCurrentView(itemView)
+                        it.callOnClick()
+                        (requireContext() as ActivityInterface).setFragment(MainActivity.facultyID)
+                        true
+                    }
+                    tv.setOnLongClickListener(lcl)
+                    tvc.setOnLongClickListener(lcl)
                 }
             }
     }
