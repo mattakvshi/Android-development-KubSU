@@ -86,7 +86,7 @@ class DataRepository private constructor(){
             Log.d(TAG, "Сохранение $jsonString")
             putString(context.getString(R.string.preference_key_university_list), jsonString)
 
-            putString(context.getString(R.string.preference_key_faculty_list), gson.toJson(facultyList.value?:listOf<Faculty>()))
+            putString(context.getString(R.string.preference_key_faculty_list), gson.toJson(facultyList.value?.items?:listOf<Faculty>()))
 
             apply()
         }
