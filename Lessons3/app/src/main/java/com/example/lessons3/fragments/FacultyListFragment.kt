@@ -62,7 +62,7 @@ class FacultyListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         
-        viewModel = ViewModelProvider(this).get(FacultyListViewModel::class.java)
+
         viewModel.facultyList.observe(viewLifecycleOwner){
             binding.rvFacultyList.adapter=FacultyAdapter(it!!.items)
         }
@@ -117,6 +117,7 @@ class FacultyListFragment : Fragment() {
 
 
                 val c_l = itemView.findViewById<ConstraintLayout>(R.id.clFacultyElement)
+
                 itemView.findViewById<ImageButton>(R.id.ibEdit).setOnClickListener{
                     updateFaculty()
                 }
@@ -134,10 +135,11 @@ class FacultyListFragment : Fragment() {
                     viewModel.setCurrentFaculty(faculty)
                     updateCurrentView(itemView)
                 }
+
                 c_l.setOnClickListener(cl)
                 tv.setOnClickListener (cl)
 
-                c_l.setOnLongClickListener{
+                val lcl = View.OnLongClickListener{
                     c_l.callOnClick()
                     llb.visibility=View. VISIBLE
                     MainScope().launch {
@@ -152,6 +154,9 @@ class FacultyListFragment : Fragment() {
                     }
                     true
                 }
+
+                c_l.setOnLongClickListener(lcl)
+                tv.setOnLongClickListener(lcl)
 
             }
         }
@@ -194,7 +199,7 @@ class FacultyListFragment : Fragment() {
             .setView(mDialogView)
             .setPositiveButton("изменить") { _, _ ->
                 if (inputName.text.isNotBlank() ) {
-                    viewModel.appendFaculty(inputName.text.toString())
+                    viewModel.updateFaculty(inputName.text.toString())
                 }
             }
             .setNegativeButton( "отмена", null)
@@ -218,8 +223,9 @@ class FacultyListFragment : Fragment() {
 
 
     override fun onAttach(context: Context) {
-        (requireContext() as ActivityInterface).updateTitle("Факультеты ${viewModel.university?.name}")
         super.onAttach(context)
+        viewModel = ViewModelProvider(this).get(FacultyListViewModel::class.java)
+        (context as ActivityInterface).updateTitle("Факультеты ${viewModel.university?.name}")
     }
 
 }
