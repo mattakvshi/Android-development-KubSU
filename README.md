@@ -1,3 +1,3 @@
 # Android-development-KubSU
 
- Лабы по адроид разработке на `Kotlin`.
+ Лабы по адроид разработке на `Kotlin`
