@@ -89,10 +89,10 @@ class MainActivity : AppCompatActivity(), ActivityInterface {
 
     }
 
-    override fun onStop(){
-        DataRepository.getInstatnce().saveData()
-        super.onStop()
-    }
+//    override fun onStop(){
+//        DataRepository.getInstatnce().saveData()
+//        super.onStop()
+//    }
 
 //    override fun onDestroy() {
 //        DataRepository.getInstatnce().saveData()

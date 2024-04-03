@@ -64,7 +64,7 @@ class FacultyListFragment : Fragment() {
         
 
         viewModel.facultyList.observe(viewLifecycleOwner){
-            binding.rvFacultyList.adapter=FacultyAdapter(it!!.items)
+            binding.rvFacultyList.adapter=FacultyAdapter(it)
         }
         binding.fabAppend.setOnClickListener{
             newFaculty()
@@ -85,7 +85,7 @@ class FacultyListFragment : Fragment() {
 
         override fun getItemCount(): Int = items.size
         override fun onBindViewHolder(holder: ItemHolder, position: Int) {
-            holder.bind(viewModel.facultyList.value!!.items[position])
+            holder.bind(viewModel.facultyList.value!![position])
         }
 
 

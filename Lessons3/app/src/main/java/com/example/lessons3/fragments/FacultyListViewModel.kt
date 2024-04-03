@@ -10,7 +10,7 @@ import com.example.lessons3.data.UniversityList
 import com.example.lessons3.repository.DataRepository
 
 class FacultyListViewModel : ViewModel() {
-    var facultyList: MutableLiveData<FacultyList?> = MutableLiveData()
+    var facultyList: MutableLiveData<List<Faculty>> = MutableLiveData()
 
     private var _faculty: Faculty? = null
 
@@ -20,11 +20,16 @@ class FacultyListViewModel : ViewModel() {
     val university
         get()=DataRepository.getInstatnce().university.value
 
-    private val facultyListObserver = Observer<FacultyList?>{
+//    private val facultyListObserver = Observer<FacultyList?>{
+//            list ->
+//        facultyList.postValue(FacultyList().apply {  items =
+//            list?.items?.filter { it.universityID == university?.id } as MutableList<Faculty>
+//        })
+//    }
+
+    private val facultyListObserver = Observer<List<Faculty>>{
             list ->
-        facultyList.postValue(FacultyList().apply {  items =
-            list?.items?.filter { it.universityID == university?.id } as MutableList<Faculty>
-        })
+        facultyList.postValue( list.filter { it.universityID == university?.id } as MutableList<Faculty>)
     }
 
     init{

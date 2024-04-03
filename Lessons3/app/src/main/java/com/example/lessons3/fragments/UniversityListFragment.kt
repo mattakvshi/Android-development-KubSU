@@ -55,7 +55,7 @@ class UniversityListFragment : Fragment(), MainActivity.Edit {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(UniversityListViewModel::class.java)
         viewModel.universityList.observe(viewLifecycleOwner){
-            binding.rvUniversity.adapter=UniversityAdapter(it!!.items)
+            binding.rvUniversity.adapter=UniversityAdapter(it)
         }
     }
 
@@ -72,7 +72,7 @@ class UniversityListFragment : Fragment(), MainActivity.Edit {
 
         override fun getItemCount(): Int = items.size
         override fun onBindViewHolder(holder: ItemHolder, position: Int) {
-            holder.bind(viewModel.universityList.value!!.items[position])
+            holder.bind(viewModel.universityList.value!![position])
         }
 
 

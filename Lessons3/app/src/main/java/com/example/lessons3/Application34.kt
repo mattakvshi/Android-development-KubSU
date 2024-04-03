@@ -6,10 +6,10 @@ import com.example.lessons3.repository.DataRepository
 
 class Application34: Application() {
 
-    override fun onCreate() {
-        super.onCreate()
-        DataRepository.getInstatnce().loadData()
-    }
+//    override fun onCreate() {
+//        super.onCreate()
+//        DataRepository.getInstatnce().loadData()
+//    }
 
     init{
         instace = this
