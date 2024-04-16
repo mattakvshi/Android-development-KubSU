@@ -7,6 +7,8 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.example.lessons3.data.Faculty
+import com.example.lessons3.data.Group
+import com.example.lessons3.data.Student
 import com.example.lessons3.data.University
 import com.example.lessons3.data.UniversityList
 import kotlinx.coroutines.flow.Flow
@@ -63,6 +65,42 @@ interface UniversityDAO {
 
     @Query("DELETE FROM faculties")
     suspend fun deleteAllFaculty()
+
+
+    //Group
+
+    @Query("SELECT * FROM groups")
+    fun getAllGroups(): Flow<List<Group>>
+
+    @Query("SELECT * FROM groups WHERE faculty_id=:facultyID")
+    fun getFacultyGroup(facultyID: UUID): Flow<List<Group>>
+
+    @Insert(entity = Group::class, onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertGroup(group: Group)
+
+    @Delete(entity = Group::class)
+    suspend fun deleteGroup(group: Group)
+
+
+    //Students
+
+    @Query("DELETE FROM groups")
+    suspend fun deleteAllGroups()
+
+    @Query("SELECT * FROM students")
+    fun getAllStudents(): Flow<List<Student>>
+
+    @Query("SELECT * FROM students WHERE group_id=:groupID")
+    fun getGroupStudent(groupID: UUID): Flow<List<Student>>
+
+    @Insert(entity = Student::class, onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertStudent(student: Student)
+
+    @Delete(entity = Student::class)
+    suspend fun deleteStudent(student: Student)
+
+    @Query("DELETE FROM students")
+    suspend fun deleteAllStudents()
     
     
 }

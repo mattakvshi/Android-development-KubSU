@@ -1,6 +1,8 @@
 package com.example.lessons3.repository
 
 import com.example.lessons3.data.Faculty
+import com.example.lessons3.data.Group
+import com.example.lessons3.data.Student
 import com.example.lessons3.data.University
 import com.example.lessons3.database.UniversityDAO
 import kotlinx.coroutines.flow.Flow
@@ -39,5 +41,21 @@ class DBRepository(val dao: UniversityDAO) :UniversityDBRepository{
     override suspend fun deleteUniversityFaculties(universityID: UUID) = dao.deleteUniversityFaculties(universityID)
 
     override suspend fun deleteAllFaculty() = dao.deleteAllFaculty()
+
+    //Group
+
+    override fun getAllGroups(): Flow<List<Group>> = dao.getAllGroups()
+    override fun getFacultyGroup(facultyID: UUID): Flow<List<Group>> = dao.getFacultyGroup(facultyID)
+    override suspend fun insertGroup(group: Group) = dao.insertGroup(group)
+    override suspend fun deleteGroup(group: Group) = dao.deleteGroup(group)
+    override suspend fun deleteAllGroups() = dao.deleteAllGroups()
+
+    //Student
+
+    override fun getAllStudents(): Flow<List<Student>> = dao.getAllStudents()
+    override fun getGroupStudent(groupID: UUID): Flow<List<Student>> = dao.getGroupStudent(groupID)
+    override suspend fun insertStudent(student: Student) = dao.insertStudent(student)
+    override suspend fun deleteStudent(student: Student) = dao.deleteStudent(student)
+    override suspend fun deleteAllStudents() = dao.deleteAllStudents()
 
 }

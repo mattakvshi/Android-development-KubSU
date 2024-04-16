@@ -10,6 +10,8 @@ import com.example.lessons3.Application34
 import com.example.lessons3.R
 import com.example.lessons3.data.Faculty
 import com.example.lessons3.data.FacultyList
+import com.example.lessons3.data.Group
+import com.example.lessons3.data.Student
 import com.example.lessons3.data.University
 import com.example.lessons3.data.UniversityList
 import com.example.lessons3.database.UniversityDB
@@ -233,5 +235,31 @@ class DataRepository private constructor() {
             universityDB.deleteFaculty(faculty)
             setCurrentFaculty(0)
         }
+    }
+
+
+    val listOfGroup: LiveData<List<Group>> = universityDB.getAllGroups().asLiveData()
+    var listOfStudent: LiveData<List<Student>> = universityDB.getAllStudents().asLiveData()
+    var group: MutableLiveData<Group> = MutableLiveData()
+    var student: MutableLiveData<Student> = MutableLiveData()
+
+    fun getGroupPosition(group: Group): Int = listOfGroup.value?.indexOfFirst {
+        it.id == group.id
+    } ?: -1
+
+    fun getGroupPosition() = getGroupPosition(group.value?: Group())
+
+    fun setCurrentGroup(position: Int) {
+        if(listOfGroup.value == null || position < 0 || (listOfGroup.value?.size!! <= position))
+            return
+        setCurrentGroup(listOfGroup.value!![position])
+    }
+
+    fun setCurrentGroup(_group: Group) {
+        group.postValue(_group)
+    }
+
+    fun addGroup(group: Group) {
+
     }
 }
