@@ -29,7 +29,7 @@ class DataRepository private constructor() {
     companion object {
         private var INSTANS: DataRepository? = null
 
-        fun getInstatnce(): DataRepository {
+        fun getInstance(): DataRepository {
             if (INSTANS == null) {
                 INSTANS = DataRepository()
             }
@@ -260,6 +260,56 @@ class DataRepository private constructor() {
     }
 
     fun addGroup(group: Group) {
-
+        myCoroutineScope.launch {
+            universityDB.insertGroup(group)
+            setCurrentGroup(group)
+        }
     }
+
+    fun updateGroup(group: Group) {
+        addGroup(group)
+    }
+
+    fun deleteGroup(group: Group) {
+        myCoroutineScope.launch {
+            universityDB.deleteGroup(group)
+            setCurrentGroup(0)
+        }
+    }
+
+    fun getStudentPosition(student: Student): Int = listOfStudent.value?.indexOfFirst {
+        it.id == student.id
+    } ?: -1
+
+    fun getStudentPosition() = getStudentPosition(student.value?: Student())
+
+    fun setCurrentStudent(position: Int) {
+        if (listOfStudent.value == null || position < 0 || (listOfStudent.value?.size!! <= position))
+            return
+        setCurrentStudent(listOfStudent.value!![position])
+    }
+
+    fun setCurrentStudent(_student: Student) {
+        student.postValue(_student)
+    }
+
+    fun addStudent(student: Student) {
+        myCoroutineScope.launch {
+            universityDB.insertStudent(student)
+            setCurrentStudent(student)
+        }
+    }
+
+    fun updateStudent(student: Student) {
+        addStudent(student)
+    }
+
+    fun deleteStudent(student: Student) {
+        myCoroutineScope.launch {
+            universityDB.deleteStudent(student)
+            setCurrentStudent(0)
+        }
+    }
+
+    
 }

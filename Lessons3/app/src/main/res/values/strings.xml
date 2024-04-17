@@ -2,4 +2,8 @@
     <string name="app_name">Lessons3</string>
     <string name="preference_key_university_list">university_list</string>
     <string name="preference_key_faculty_list">faculty_list</string>
+    <string-array name="SEX">
+        <item>Женский</item>
+        <item>Мужской</item>
+    </string-array>
 </resources>
