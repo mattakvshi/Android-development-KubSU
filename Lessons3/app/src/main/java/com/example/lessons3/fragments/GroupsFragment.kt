@@ -1,21 +1,26 @@
 package com.example.lessons3.fragments
 
+import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.lessons3.ActivityInterface
+import com.example.lessons3.MainActivity
+import com.example.lessons3.R
 import com.example.lessons3.data.Group
 import com.example.lessons3.databinding.FragmentGroupsBinding
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
-class GroupsFragment : Fragment() {
+class GroupsFragment : Fragment(), MainActivity.Edit {
 
     companion object {
         private var INSTANCE: GroupsFragment? = null
@@ -98,4 +103,58 @@ class GroupsFragment : Fragment() {
             }
         })
     }
+
+
+    override fun append() {
+        editGroup()
+    }
+
+    override fun update() {
+        editGroup(viewModel.group?.name ?: "")
+    }
+
+    override fun delete() {
+        deleteDialog()
+    }
+
+    private fun deleteDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Удаление")
+            .setMessage("Вы действительно хотите удалить студента ${viewModel.group?.name ?: ""}?")
+            .setPositiveButton("Да") { _, _ ->
+                viewModel.deleteGroup()
+            }
+            .setNegativeButton("Нет", null)
+            .setCancelable(true)
+            .create()
+            .show()
+    }
+
+    @SuppressLint("MissingInflatedId")
+    private fun editGroup(groupName : String=""){
+        val mDialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_university_edit, null)
+
+        mDialogView.findViewById<EditText>(R.id.etCity).visibility = View.GONE
+        mDialogView.findViewById<EditText>(R.id.tv_City).visibility = View.GONE
+        val inputString = mDialogView.findViewById<EditText>(R.id.etName)
+        inputString.setText(groupName)
+
+        android.app.AlertDialog.Builder(requireContext())
+            .setTitle("Укажите инаименование группы")
+            .setView(mDialogView)
+            .setPositiveButton("подтверждаю") { _, _ ->
+                if (inputString.text.isNotBlank()) {
+                    if (groupName.isBlank())
+                        viewModel.appendGroup(inputString.text.toString())
+                    else
+                        viewModel.updateGroup(inputString.text.toString())
+
+                }
+            }
+            .setNegativeButton("Отмена", null)
+            .setCancelable(true)
+            .create()
+            .show()
+    }
+
 }

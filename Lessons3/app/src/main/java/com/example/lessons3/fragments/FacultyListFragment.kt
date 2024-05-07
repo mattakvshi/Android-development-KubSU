@@ -1,9 +1,7 @@
 package com.example.lessons3.fragments
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
-import androidx.fragment.app.viewModels
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,16 +13,13 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.findFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lessons3.ActivityInterface
 import com.example.lessons3.R
 import com.example.lessons3.data.Faculty
-import com.example.lessons3.data.University
 import com.example.lessons3.databinding.FragmentFacultyListBinding
-import com.example.lessons3.databinding.FragmentUniversityListBinding
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -99,7 +94,7 @@ class FacultyListFragment : Fragment() {
                 ContextCompat.getColor(requireContext(), R.color.white)
             )
             view.findViewById<ConstraintLayout>(R.id.clFacultyElement).setBackgroundColor(
-                ContextCompat.getColor(requireContext(), R.color.mu_blue)
+                ContextCompat.getColor(requireContext(), R.color.my_blue)
             )
             lastView=view
         }
@@ -165,9 +160,9 @@ class FacultyListFragment : Fragment() {
     private fun newFaculty() {
         val mDialogView =
             LayoutInflater.from(requireContext()).inflate(R.layout.dialog_university_edit, null)
-        val inputName = mDialogView.findViewById<EditText>(R.id.edUniversityName)
+        val inputName = mDialogView.findViewById<EditText>(R.id.etName)
 
-        mDialogView.findViewById<EditText>(R.id.edUniversityCity).visibility=View.GONE
+        mDialogView.findViewById<EditText>(R.id.etCity).visibility=View.GONE
         mDialogView.findViewById<TextView>(R.id.tv_City).visibility=View.GONE
 
         android.app.AlertDialog.Builder(requireContext())
@@ -187,9 +182,9 @@ class FacultyListFragment : Fragment() {
     private fun updateFaculty() {
         val mDialogView =
             LayoutInflater.from(requireContext()).inflate(R.layout.dialog_university_edit, null)
-        val inputName = mDialogView.findViewById<EditText>(R.id.edUniversityName)
+        val inputName = mDialogView.findViewById<EditText>(R.id.etName)
 
-        mDialogView.findViewById<EditText>(R.id.edUniversityCity).visibility=View.GONE
+        mDialogView.findViewById<EditText>(R.id.etCity).visibility=View.GONE
         mDialogView.findViewById<TextView>(R.id.tv_City).visibility=View.GONE
 
         inputName.setText(viewModel.faculty?.name)

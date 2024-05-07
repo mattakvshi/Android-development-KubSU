@@ -18,7 +18,7 @@ class FacultyListViewModel : ViewModel() {
         get()=_faculty
 
     val university
-        get()=DataRepository.getInstatnce().university.value
+        get()=DataRepository.getInstance().university.value
 
 //    private val facultyListObserver = Observer<FacultyList?>{
 //            list ->
@@ -33,32 +33,32 @@ class FacultyListViewModel : ViewModel() {
     }
 
     init{
-        DataRepository.getInstatnce().facultyList.observeForever(facultyListObserver)
-        DataRepository.getInstatnce().faculty.observeForever {
+        DataRepository.getInstance().facultyList.observeForever(facultyListObserver)
+        DataRepository.getInstance().faculty.observeForever {
             _faculty=it
         }
     }
 
     fun deleteFaculty(){
         if (faculty!=null)
-            DataRepository.getInstatnce().deleteFaculty(faculty!!)
+            DataRepository.getInstance().deleteFaculty(faculty!!)
     }
 
     fun appendFaculty (facultyName : String){
         val faculty = Faculty()
         faculty.name=facultyName
-        faculty.universityID=DataRepository.getInstatnce().university.value?.id
-        DataRepository.getInstatnce().newFaculty(faculty)
+        faculty.universityID=DataRepository.getInstance().university.value?.id
+        DataRepository.getInstance().newFaculty(faculty)
     }
 
     fun updateFaculty(facultyName: String){
         if (_faculty!=null) {
             _faculty!!.name=facultyName
-            DataRepository.getInstatnce().updateFaculty(_faculty!!)
+            DataRepository.getInstance().updateFaculty(_faculty!!)
         }
     }
 
     fun setCurrentFaculty(faculty: Faculty){
-        DataRepository.getInstatnce().setCurrentFaculty(faculty)
+        DataRepository.getInstance().setCurrentFaculty(faculty)
     }
 }

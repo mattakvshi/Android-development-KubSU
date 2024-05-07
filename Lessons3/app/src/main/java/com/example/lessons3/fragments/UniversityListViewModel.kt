@@ -10,7 +10,7 @@ import com.example.lessons3.repository.DataRepository
 
 class UniversityListViewModel : ViewModel() {
     //var universityList: MutableLiveData<UniversityList?>  = MutableLiveData()
-    var universityList: LiveData<List<University>> = DataRepository.getInstatnce().universityList
+    var universityList: LiveData<List<University>> = DataRepository.getInstance().universityList
 
     private var _university: University? = null
 
@@ -24,33 +24,33 @@ class UniversityListViewModel : ViewModel() {
 
     init{
         //DataRepository.getInstatnce().universityList.observeForever(universityListObserver)
-        DataRepository.getInstatnce().university.observeForever {
+        DataRepository.getInstance().university.observeForever {
             _university=it
         }
     }
 
     fun deleteUniversity(){
         if (university!=null)
-            DataRepository.getInstatnce().deleteUniversity(university!!)
+            DataRepository.getInstance().deleteUniversity(university!!)
     }
 
     fun appendUniversity (universityName : String, universityCity: String){
         val university = University()
         university.name=universityName
         university.city=universityCity
-        DataRepository.getInstatnce().newUniversity(university)
+        DataRepository.getInstance().newUniversity(university)
     }
 
     fun updateUniversity(universityName: String, universityCity: String){
         if (_university!=null) {
             _university!!.name=universityName
             _university!!.city=universityCity
-            DataRepository.getInstatnce().updateUniversity(_university!!)
+            DataRepository.getInstance().updateUniversity(_university!!)
         }
     }
 
     fun setCurrentUniversity(university: University){
-        DataRepository.getInstatnce().setCurrentUniversity(university)
+        DataRepository.getInstance().setCurrentUniversity(university)
     }
 
 }

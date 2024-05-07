@@ -20,7 +20,6 @@ import com.example.lessons3.R
 import com.example.lessons3.data.University
 import com.example.lessons3.databinding.FragmentUniversityListBinding
 import java.lang.Exception
-import java.lang.reflect.Executable
 
 class UniversityListFragment : Fragment(), MainActivity.Edit {
 
@@ -136,8 +135,8 @@ class UniversityListFragment : Fragment(), MainActivity.Edit {
     private fun newUniversity() {
         val mDialogView =
             LayoutInflater.from(requireContext()).inflate(R.layout.dialog_university_edit, null)
-        val inputName = mDialogView.findViewById<EditText>(R.id.edUniversityName)
-        val inputCity = mDialogView.findViewById<EditText>(R.id.edUniversityCity)
+        val inputName = mDialogView.findViewById<EditText>(R.id.etName)
+        val inputCity = mDialogView.findViewById<EditText>(R.id.etCity)
         android.app.AlertDialog.Builder(requireContext())
             .setTitle("Информация об университете")
             .setView(mDialogView)
@@ -155,8 +154,8 @@ class UniversityListFragment : Fragment(), MainActivity.Edit {
     private fun updateUniversity() {
         val mDialogView =
             LayoutInflater.from(requireContext()).inflate(R.layout.dialog_university_edit, null)
-        val inputName = mDialogView.findViewById<EditText>(R.id.edUniversityName)
-        val inputCity = mDialogView.findViewById<EditText>(R.id.edUniversityCity)
+        val inputName = mDialogView.findViewById<EditText>(R.id.etName)
+        val inputCity = mDialogView.findViewById<EditText>(R.id.etCity)
         inputName.setText(viewModel.university?.name)
         inputCity.setText(viewModel.university?.city)
 
