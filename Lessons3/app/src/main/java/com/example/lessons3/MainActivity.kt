@@ -22,6 +22,8 @@ class MainActivity : AppCompatActivity(), ActivityInterface {
     companion object{
         const val universityID = 0
         const val facultyID = 1
+        const val groupID = 2
+        const val studentID = 3
     }
 
     private var _miNewUniversity: MenuItem? =null

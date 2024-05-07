@@ -1,17 +1,16 @@
 package com.example.lessons3.fragments
 
-import androidx.fragment.app.viewModels
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.Group
+
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.lessons3.ActivityInterface
-import com.example.lessons3.R
+import com.example.lessons3.data.Group
 import com.example.lessons3.databinding.FragmentGroupsBinding
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -66,7 +65,7 @@ class GroupsFragment : Fragment() {
         binding.tlGroups.clearOnTabSelectedListeners()
         binding.tlGroups.removeAllTabs()
 
-        for (i in 0 <= until < (groupList.size)) {
+        for (i in 0 until  (groupList.size)) {
             binding.tlGroups.addTab(binding.tlGroups.newTab().apply {
                 text = groupList.get(i).name
             })

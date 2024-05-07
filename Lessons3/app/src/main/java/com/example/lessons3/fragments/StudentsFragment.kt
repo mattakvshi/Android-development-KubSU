@@ -16,7 +16,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.Group
+
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.lessons3.ActivityInterface
 import com.example.lessons3.MainActivity
 import com.example.lessons3.R
+import com.example.lessons3.data.Group
 import com.example.lessons3.data.Student
 import com.example.lessons3.databinding.FragmentStudentsBinding
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -42,10 +43,11 @@ class StudentsFragment : Fragment() {
         }
     }
 
-    private lateinit var viewModel: FacultyListViewModel
+    private lateinit var viewModel: StudentsViewModel
 
     private lateinit var _binding: FragmentStudentsBinding
-    val binding get() = _binding
+    val binding
+        get() = _binding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -94,7 +96,6 @@ class StudentsFragment : Fragment() {
             viewType: Int
         ): StudentAdapter.ItemHolder {
 
-            //ниже код с последней пары
 
             val view = layoutInflater.inflate(R.layout.element_student_list, parent, false)
             return ItemHolder(view)
@@ -127,7 +128,7 @@ class StudentsFragment : Fragment() {
             @OptIn(DelicateCoroutinesApi::class)
             fun bind(student: Student) {
                 this.student = student
-                if (student == ViewModel.student)
+                if (student == viewModel.student)
                     updateCurrentView(itemView)
                 val tv = itemView.findViewById<TextView>(R.id.tvStudentName)
                 tv.text = student.shortName
@@ -189,36 +190,6 @@ class StudentsFragment : Fragment() {
                     }
                 }
             }
-        }
-
-        override fun onCreateViewHolder(
-            parent: ViewGroup,
-            viewType: Int
-        ): StudentAdapter.ItemHolder {
-            val view = layoutInflater.inflate(R.layout.element_student_list, parent, false)
-            return ItemHolder(view)
-        }
-
-        override fun onBindViewHolder(holder: StudentAdapter.ItemHolder, position: Int) {
-            holder.bind(viewModel.studentList.value!![position])
-        }
-
-        override fun getItemCount(): Int = items.size
-
-        private var lastView : View? = null
-        private fun updateCurrentView(view: View) {
-            val ll = lastView?.findViewById<LinearLayout>(R.id.llStudentButtons)
-            ll?.visibility = View.INVISIBLE
-            ll?.layoutParams = ll?.layoutParams.apply { this?.width =1 }
-            val ib = lastView?.findViewById<ImageButton>(R.id.ibCall)
-            ib?.visibility = View.INVISIBLE
-            ib?.layoutParams = ib?.layoutParams.apply { this?.width = 1 }
-
-            lastView?.findViewById<ConstraintLayout>(R.id.clStudent)?.setBackgroundColor(
-                ContextCompat.getColor(requireContext(), R.color.white))
-            view.findViewById<ConstraintLayout>(R.id.clStudent).setBackgroundColor(
-                ContextCompat.getColor(requireContext(), R.color.my_blue))
-            lastView = view
         }
     }
 }

@@ -7,11 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.lessons3.R
+import com.example.lessons3.data.Group
 
 class StudentFragment : Fragment() {
 
     companion object {
-        fun newInstance() = StudentFragment()
+        fun newInstance(group: Group) = StudentFragment()
     }
 
     private val viewModel: StudentViewModel by viewModels()
