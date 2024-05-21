@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.FacultyListFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvFacultyList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAppend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:clickable="true"
+        android:foreground="@drawable/fab_shape"
+        android:minWidth="10dp"
+        android:minHeight="10dp"
+        android:src="@android:drawable/ic_input_add"
+        android:visibility="gone"
+        app:fabCustomSize="35dp" />
+</FrameLayout>
